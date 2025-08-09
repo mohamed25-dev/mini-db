@@ -1,7 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
 
 func main() {
-	fmt.Println("Hello DB !!")
+	for {
+		fmt.Println("mini-db >")
+
+		line, _ := bufio.NewReader(os.Stdin).ReadString('\n')
+		line = strings.TrimSpace(line)
+		if strings.EqualFold(line, "exit") {
+			break
+		}
+
+		fmt.Println(line)
+	}
 }
