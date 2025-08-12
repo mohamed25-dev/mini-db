@@ -17,22 +17,27 @@ func main() {
 			break
 		}
 
-		fmt.Println(line)
-
-		tokens := make([]Token, 1)
+		tokens := make([]Token, 0)
 		scanner := NewScanner(line)
+
+		longestLen := 0
 
 		for {
 			token := scanner.getNextToken()
 			if token.Type == EOF {
 				break
 			}
+
+			if len(token.Type) > longestLen {
+				longestLen = len(token.Type)
+			}
+
 			tokens = append(tokens, token)
 		}
 
-		fmt.Println("tokens -> ", tokens)
 		for _, t := range tokens {
-			fmt.Println(t.Type, t.Literal)
+			spaces := longestLen - len(t.Type)
+			fmt.Printf("type: %v %*s,  literal: %v \n", t.Type, spaces, "", t.Literal)
 		}
 	}
 }
