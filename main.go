@@ -18,5 +18,21 @@ func main() {
 		}
 
 		fmt.Println(line)
+
+		tokens := make([]Token, 1)
+		scanner := NewScanner(line)
+
+		for {
+			token := scanner.getNextToken()
+			if token.Type == EOF {
+				break
+			}
+			tokens = append(tokens, token)
+		}
+
+		fmt.Println("tokens -> ", tokens)
+		for _, t := range tokens {
+			fmt.Println(t.Type, t.Literal)
+		}
 	}
 }
