@@ -6,16 +6,23 @@ import (
 
 type TokenType string
 
+type Token struct {
+	Type    TokenType
+	Literal string
+}
+
 const (
+	// Special
 	EOF TokenType = ""
 
+	//  Operators and Punctuations
 	L_PAREN     TokenType = "("
 	R_PAREN     TokenType = ")"
 	COMMA       TokenType = ","
+	SEMICOLON   TokenType = ";"
 	MINUS       TokenType = "-"
 	PLUS        TokenType = "+"
 	ASTERISK    TokenType = "*"
-	SEMICOLON   TokenType = ";"
 	EQUAL       TokenType = "="
 	GT          TokenType = ">"
 	LT          TokenType = "<"
@@ -35,7 +42,7 @@ const (
 	//  Identifiers + literals
 	IDENT  TokenType = "IDENT"
 	STRING TokenType = "STRING"
-	NUMBER TokenType = "NUMBER"
+	INT    TokenType = "INT"
 )
 
 var keywordsMap = map[string]TokenType{
@@ -47,11 +54,6 @@ var keywordsMap = map[string]TokenType{
 	"INSERT": INSERT,
 	"INTO":   INTO,
 	"VALUES": VALUES,
-}
-
-type Token struct {
-	Type    TokenType
-	Literal string
 }
 
 func NewScanner(input string) *Scanner {
@@ -180,7 +182,7 @@ func (s *Scanner) getNextToken() Token {
 		} else if isDigit(s.ch) {
 			ident := s.readNumber()
 			token = Token{
-				Type:    NUMBER,
+				Type:    INT,
 				Literal: ident,
 			}
 		} else {
